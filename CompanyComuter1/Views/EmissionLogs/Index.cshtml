@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CompanyComuter1.Models.TopPerformers_Result>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Top 5 performers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-sm table-dark">
+    <tr class="table-success">
+        <th>
+            @Html.DisplayNameFor(model => model.co2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.firstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lastName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="table-warning">
+            <td>
+                @Html.DisplayFor(modelItem => item.co2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.firstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ssn }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ssn }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ssn })
+            </td>
+        </tr>
+    }
+
+</table>

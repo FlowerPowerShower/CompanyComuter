@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CompanyComuterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EmissionLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ssn" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="vType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="distance" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="co2" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ssn" />
+          </Key>
+          <Property Name="ssn" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="20" />
+          <Property Name="lastName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="vType" />
+          </Key>
+          <Property Name="vType" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="co2PerKm" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <Association Name="fk_log_employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmissionLog" Type="Self.EmissionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ssn" />
+            </Principal>
+            <Dependent Role="EmissionLog">
+              <PropertyRef Name="ssn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_log_vehicle">
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmissionLog" Type="Self.EmissionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="vType" />
+            </Principal>
+            <Dependent Role="EmissionLog">
+              <PropertyRef Name="vType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ErrorHandling" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FindEmployeeBySsn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ssn" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="FindLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetAllLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetCo2ForVehicle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vType" Type="varchar" Mode="In" />
+          <Parameter Name="co2" Type="decimal" Mode="InOut" />
+        </Function>
+        <Function Name="GetCurrentId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="oldId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="InsertEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ssn" Type="varchar" Mode="In" />
+          <Parameter Name="firstName" Type="varchar" Mode="In" />
+          <Parameter Name="lastName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InsertLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ssn" Type="varchar" Mode="In" />
+          <Parameter Name="vType" Type="varchar" Mode="In" />
+          <Parameter Name="distance" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="multiplyCo2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+          <Parameter Name="co2" Type="decimal" Mode="In" />
+          <Parameter Name="distance" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="Top5Employees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="TopPerformers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ssn" Type="varchar" Mode="In" />
+          <Parameter Name="firstName" Type="varchar" Mode="In" />
+          <Parameter Name="lastName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="vType" Type="varchar" Mode="In" />
+          <Parameter Name="distance" Type="decimal" Mode="In" />
+        </Function>
+        <EntityContainer Name="CompanyComuterModelStoreContainer">
+          <EntitySet Name="EmissionLog" EntityType="Self.EmissionLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicle" EntityType="Self.Vehicle" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_log_employee" Association="Self.fk_log_employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmissionLog" EntitySet="EmissionLog" />
+          </AssociationSet>
+          <AssociationSet Name="fk_log_vehicle" Association="Self.fk_log_vehicle">
+            <End Role="Vehicle" EntitySet="Vehicle" />
+            <End Role="EmissionLog" EntitySet="EmissionLog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CompanyComuterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EmissionLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ssn" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="distance" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="co2" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Employee" Relationship="Self.fk_log_employee" FromRole="EmissionLog" ToRole="Employee" />
+          <NavigationProperty Name="Vehicle" Relationship="Self.fk_log_vehicle" FromRole="EmissionLog" ToRole="Vehicle" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ssn" />
+          </Key>
+          <Property Name="ssn" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmissionLogs" Relationship="Self.fk_log_employee" FromRole="Employee" ToRole="EmissionLog" />
+        </EntityType>
+        <EntityType Name="Vehicle">
+          <Key>
+            <PropertyRef Name="vType" />
+          </Key>
+          <Property Name="vType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="co2PerKm" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="EmissionLogs" Relationship="Self.fk_log_vehicle" FromRole="Vehicle" ToRole="EmissionLog" />
+        </EntityType>
+        <Association Name="fk_log_employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmissionLog" Type="Self.EmissionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ssn" />
+            </Principal>
+            <Dependent Role="EmissionLog">
+              <PropertyRef Name="ssn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_log_vehicle">
+          <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmissionLog" Type="Self.EmissionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicle">
+              <PropertyRef Name="vType" />
+            </Principal>
+            <Dependent Role="EmissionLog">
+              <PropertyRef Name="vType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CompanyComuterEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EmissionLogs" EntityType="Self.EmissionLog" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Vehicles" EntityType="Self.Vehicle" />
+          <AssociationSet Name="fk_log_employee" Association="Self.fk_log_employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmissionLog" EntitySet="EmissionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_log_vehicle" Association="Self.fk_log_vehicle">
+            <End Role="Vehicle" EntitySet="Vehicles" />
+            <End Role="EmissionLog" EntitySet="EmissionLogs" />
+          </AssociationSet>
+          <FunctionImport Name="DeleteEmployee" EntitySet="Employees" ReturnType="Collection(CompanyComuterModel.Employee)">
+          <Parameter Name="ssn" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteLogEntry">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ErrorHandling" />
+          <FunctionImport Name="GetAllEmployees" EntitySet="Employees" ReturnType="Collection(CompanyComuterModel.Employee)" />
+          <FunctionImport Name="GetAllLogs" EntitySet="EmissionLogs" ReturnType="Collection(CompanyComuterModel.EmissionLog)" />
+          <FunctionImport Name="GetCo2ForVehicle">
+            <Parameter Name="vType" Mode="In" Type="String" />
+            <Parameter Name="co2" Mode="InOut" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="GetCurrentId">
+          <Parameter Name="oldId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertEmployee">
+            <Parameter Name="ssn" Mode="In" Type="String" />
+            <Parameter Name="firstName" Mode="In" Type="String" />
+            <Parameter Name="lastName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertLog">
+            <Parameter Name="ssn" Mode="In" Type="String" />
+            <Parameter Name="vType" Mode="In" Type="String" />
+            <Parameter Name="distance" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="Top5Employees" ReturnType="Collection(CompanyComuterModel.Top5Employees_Result)" />
+          <FunctionImport Name="UpdateEmployee">
+            <Parameter Name="ssn" Mode="In" Type="String" />
+            <Parameter Name="firstName" Mode="In" Type="String" />
+            <Parameter Name="lastName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateLog">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="vType" Mode="In" Type="String" />
+            <Parameter Name="distance" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="FindEmployeeBySsn" EntitySet="Employees" ReturnType="Collection(CompanyComuterModel.Employee)">
+          <Parameter Name="ssn" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FindLog" EntitySet="EmissionLogs" ReturnType="Collection(CompanyComuterModel.EmissionLog)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="TopPerformers" ReturnType="Collection(CompanyComuterModel.TopPerformers_Result)" />
+        </EntityContainer>
+        <ComplexType Name="GetAllEmployees_Result">
+          <Property Type="String" Name="ssn" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="firstName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="lastName" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="Top5Employees_Result">
+          <Property Type="Decimal" Name="co2" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="String" Name="firstName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="lastName" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="FindEmployeeBySsn_Result">
+          <Property Type="String" Name="ssn" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="firstName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="lastName" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="FindLog_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="ssn" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="vType" Nullable="false" MaxLength="20" />
+          <Property Type="Decimal" Name="distance" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="co2" Nullable="true" Precision="10" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="TopPerformers_Result">
+          <Property Type="Decimal" Name="co2" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="String" Name="firstName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="lastName" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ssn" Nullable="false" MaxLength="10" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CompanyComuterModelStoreContainer" CdmEntityContainer="CompanyComuterEntities1">
+          <EntitySetMapping Name="EmissionLogs">
+            <EntityTypeMapping TypeName="CompanyComuterModel.EmissionLog">
+              <MappingFragment StoreEntitySet="EmissionLog">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ssn" ColumnName="ssn" />
+                <ScalarProperty Name="vType" ColumnName="vType" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
+                <ScalarProperty Name="co2" ColumnName="co2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="CompanyComuterModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="ssn" ColumnName="ssn" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicles">
+            <EntityTypeMapping TypeName="CompanyComuterModel.Vehicle">
+              <MappingFragment StoreEntitySet="Vehicle">
+                <ScalarProperty Name="vType" ColumnName="vType" />
+                <ScalarProperty Name="co2PerKm" ColumnName="co2PerKm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ErrorHandling" FunctionName="CompanyComuterModel.Store.ErrorHandling" />
+          <FunctionImportMapping FunctionImportName="GetAllLogs" FunctionName="CompanyComuterModel.Store.GetAllLogs" />
+          <FunctionImportMapping FunctionImportName="GetCo2ForVehicle" FunctionName="CompanyComuterModel.Store.GetCo2ForVehicle" />
+          <FunctionImportMapping FunctionImportName="GetCurrentId" FunctionName="CompanyComuterModel.Store.GetCurrentId" />
+          <FunctionImportMapping FunctionImportName="InsertEmployee" FunctionName="CompanyComuterModel.Store.InsertEmployee" />
+          <FunctionImportMapping FunctionImportName="InsertLog" FunctionName="CompanyComuterModel.Store.InsertLog" />
+          <FunctionImportMapping FunctionImportName="Top5Employees" FunctionName="CompanyComuterModel.Store.Top5Employees">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CompanyComuterModel.Top5Employees_Result">
+                <ScalarProperty Name="co2" ColumnName="co2" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateEmployee" FunctionName="CompanyComuterModel.Store.UpdateEmployee" />
+          <FunctionImportMapping FunctionImportName="UpdateLog" FunctionName="CompanyComuterModel.Store.UpdateLog" />
+          <FunctionImportMapping FunctionImportName="FindEmployeeBySsn" FunctionName="CompanyComuterModel.Store.FindEmployeeBySsn">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FindLog" FunctionName="CompanyComuterModel.Store.FindLog">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TopPerformers" FunctionName="CompanyComuterModel.Store.TopPerformers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CompanyComuterModel.TopPerformers_Result">
+                <ScalarProperty Name="co2" ColumnName="co2" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="ssn" ColumnName="ssn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

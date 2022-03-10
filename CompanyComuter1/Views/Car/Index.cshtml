@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CompanyComuter1.Models.ApiCarModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Find out how much your car pollutes</h2>
+
+<iframe src="https://40ug0g7mdc0nixd.eu.qlikcloud.com/single/?appid=06b71415-9770-415b-b10a-730da04a2778&obj=ddMx&opt=ctxmenu,currsel" style="border:none;width:1000px;height:350px;"></iframe>
+<br />
+<a href="https://gmobility.eu/what-is-well-to-wheel/">What is WTW AND TTW</a>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.model)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.engine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.offical_euro_class)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WTW_CO2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TTW_CO2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.testprog)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.engine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.offical_euro_class)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WTW_CO2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TTW_CO2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.testprog)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>

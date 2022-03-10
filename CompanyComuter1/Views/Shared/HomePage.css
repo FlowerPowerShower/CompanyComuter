@@ -1,0 +1,93 @@
+﻿@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    z-index: 2;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.home-picture {
+    background-image: url(http://localhost:8080/HealthTrackerClient/img/gym-homepage.jpg);
+    height: 100%;
+    /* Centrera och skala bilden */
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Gör så att bilden bara förekommer en gång */
+    background-size: cover;
+}
+
+.middle1 { /*Register today text!*/
+    position: absolute;
+    top: 82%;
+    left: 41%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: black;
+    width: 150px;
+    height: 20px;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #dfea15;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+.middle2 {
+    position: absolute;
+    top: 59%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    color: #f2f2f2;
+    width: 320px;
+    height: 40px;
+    padding: 10px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    font-size: 38px;
+}
+
+.middle1:hover {
+    opacity: 0.9;
+}
+
+#parallelogram {
+    border-bottom: 200px solid black;
+    border-right: 50px solid transparent;
+    width: 40%;
+    position: absolute;
+    top: 55%;
+    left: 0%;
+    z-index: 1;
+    opacity: 0.9;
+}
+
+/* Slut på bakgrund för homePage */
+/* Tre lika stora columner brevid varandra */
+.column {
+    float: left;
+    width: 50%;
+    padding: 30px;
+    box-sizing: border-box;
+    /*Ser till att padding blir med i maxstorleken*/
+}
+
+/* Rensar floats*/
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Gör innehållet responsive */
+@media screen and (max-width:600px) {
+    .column {
+        width: 100%;
+    }
+}

@@ -1,0 +1,69 @@
+﻿@model CompanyComuter1.Models.EmissionLog
+
+ 
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Log a commute</h2>
+
+<iframe src="https://40ug0g7mdc0nixd.eu.qlikcloud.com/single/?appid=06b71415-9770-415b-b10a-730da04a2778&obj=XEG&opt=ctxmenu,currsel" style="border:none;width:700px;height:300px;"></iframe>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>EmissionLog</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ssn, "ssn", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ssn", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ssn, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.vType, "Vtype", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Vtype", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.vType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.distance, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.distance, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.distance, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.co2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.co2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.co2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,50 @@
+﻿@model CompanyComuter1.Models.EmissionLog
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EmissionLog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.distance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.distance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.co2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.co2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.firstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.firstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vehicle.vType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vehicle.vType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
